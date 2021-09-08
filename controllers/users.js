@@ -6,7 +6,7 @@ const { JWT_SECRET, NODE_ENV } = process.env;
 const NotFoundError = require('../errors/not-found-error');
 const ForbiddenError = require('../errors/forbidden-error');
 const { errorMessages } = require('../errors/error-config');
-const handleErrors = require('../errors/handleErrors');
+const handleErrors = require('../errors/handle-errors');
 
 const { forbiddenErrorMessage } = errorMessages;
 const notFoundErrorMessage = errorMessages.notFoundErrorMessages.users;

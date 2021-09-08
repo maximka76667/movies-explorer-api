@@ -2,7 +2,7 @@ const Movie = require('../models/movie');
 const NotFoundError = require('../errors/not-found-error');
 const ForbiddenError = require('../errors/forbidden-error');
 const { errorMessages } = require('../errors/error-config');
-const handleErrors = require('../errors/handleErrors');
+const handleErrors = require('../errors/handle-errors');
 
 const notFoundErrorMessage = errorMessages.notFoundErrorMessages.movies;
 const { forbiddenErrorMessage } = errorMessages;
