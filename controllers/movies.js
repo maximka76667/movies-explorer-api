@@ -1,15 +1,14 @@
-const Movie = require('../models/card');
+const Movie = require('../models/movie');
 const NotFoundError = require('../errors/not-found-error');
 const ForbiddenError = require('../errors/forbidden-error');
 const { errorMessages } = require('../errors/error-config');
 const handleErrors = require('../errors/handleErrors');
 
-const notFoundErrorMessage = errorMessages.notFoundErrorMessages.cards;
+const notFoundErrorMessage = errorMessages.notFoundErrorMessages.movies;
 const { forbiddenErrorMessage } = errorMessages;
 
 const getMovies = (req, res, next) => {
   Movie.find({})
-    .populate('user')
     .then((movies) => res.send({ movies: movies.reverse() }))
     .catch((err) => next(handleErrors(err)));
 };

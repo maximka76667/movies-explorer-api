@@ -10,11 +10,11 @@ const errorMessages = {
   unauthorizedErrorMessage: 'Ошибка авторизации',
   forbiddenErrorMessage: 'Отказано в доступе',
   notFoundErrorMessages: {
-    cards: 'Карточка с указанным _id не найдена.',
+    movies: 'Карточка с указанным _id не найдена.',
     users: 'Пользователь по указанному _id не найден.',
     routes: 'Запрашиваемый маршрут не найден',
   },
-  castErrorMessage: 'Невалидный id ',
+  castErrorMessage: 'Невалидный id',
   conflictErrorMessage: 'Почтовый адрес уже используется',
   defaultErrorMessage: 'На сервере произошла ошибка',
 };
