@@ -11,31 +11,15 @@ const handleErrors = require('../errors/handleErrors');
 const { forbiddenErrorMessage } = errorMessages;
 const notFoundErrorMessage = errorMessages.notFoundErrorMessages.users;
 
-const getUsers = (req, res, next) => {
-  User.find({})
-    .then((users) => res.send({ users }))
-    .catch((err) => next(handleErrors(err)));
-};
-
 const getMyUser = (req, res, next) => {
   User.find({ _id: req.user._id })
     .then((user) => res.send({ user: user[0] }))
     .catch((err) => next(handleErrors(err)));
 };
 
-const getUserById = (req, res, next) => {
-  const { userId } = req.params;
-  User.findById(userId)
-    .then((user) => {
-      if (!user) throw new NotFoundError(notFoundErrorMessage);
-      return res.send({ user });
-    })
-    .catch((err) => next(handleErrors(err)));
-};
-
 const createUser = (req, res, next) => {
   const {
-    name, about, avatar, email, password,
+    name, email, password,
   } = req.body;
 
   bcrypt.hash(password, 10)
@@ -43,38 +27,24 @@ const createUser = (req, res, next) => {
       User.init()
         .then(
           User.create({
-            name, about, avatar, email, password: hash,
+            name, email, password: hash,
           })
             .then((user) => res.send({
               _id: user._id,
               name,
-              about,
-              avatar,
               email,
             }))
             .catch((err) => next(handleErrors(err))),
         )
-        .catch(next);
-    })
-    .catch(next);
-};
-
-const updateUser = (req, res, next) => {
-  const { name, about } = req.body;
-
-  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
-    .then((user) => {
-      if (!user) throw new NotFoundError(notFoundErrorMessage);
-      if (user._id.toString() !== req.user._id) throw new ForbiddenError(forbiddenErrorMessage);
-      return res.send({ user });
+        .catch((err) => next(handleErrors(err)));
     })
     .catch((err) => next(handleErrors(err)));
 };
 
-const updateAvatar = (req, res, next) => {
-  const { avatar } = req.body;
+const updateUser = (req, res, next) => {
+  const { name, email } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+  User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) throw new NotFoundError(notFoundErrorMessage);
       if (user._id.toString() !== req.user._id) throw new ForbiddenError(forbiddenErrorMessage);
@@ -107,11 +77,8 @@ const login = (req, res, next) => {
 };
 
 module.exports = {
-  getUsers,
   getMyUser,
-  getUserById,
   createUser,
   updateUser,
-  updateAvatar,
   login,
 };

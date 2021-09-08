@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
+const UnauthorizedError = require('../errors/unauthorized-error');
+const { errorMessages } = require('../errors/error-config');
+
+const { unauthorizedErrorMessage } = errorMessages;
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -23,7 +28,6 @@ const userSchema = new mongoose.Schema({
     maxlength: 30,
     required: true,
   },
-
   versionKey: false,
 });
 

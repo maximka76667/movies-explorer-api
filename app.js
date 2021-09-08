@@ -4,17 +4,20 @@ const mongoose = require('mongoose');
 
 const { isCelebrateError, celebrate, Joi } = require('celebrate');
 
-const { validateLink } = require('./utils/validateLink');
 const { createUser, login } = require('./controllers/users');
-
-const { PORT = 3000 } = process.env;
 
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+// Errors
+const NotFoundError = require('./errors/not-found-error');
+const { errorMessages, DEFAULT_ERROR_CODE, BAD_REQUEST_ERROR_CODE } = require('./errors/error-config');
+
+const { PORT = 3000 } = process.env;
+
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', err => {
+mongoose.connect('mongodb://localhost:27017/moviesdb', err => {
   if(err) throw err;
   console.log('Connected to MongoDB.')
 });
@@ -27,9 +30,7 @@ app.use(requestLogger);
 // User signup
 app.post('/signup', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().min(2).custom(validateLink),
+    name: Joi.string().min(2).max(30).required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
@@ -53,6 +54,7 @@ app.use(errorLogger);
 app.use((err, req, res, next) => {
   const { statusCode = DEFAULT_ERROR_CODE, message = errorMessages.defaultErrorMessage } = err;
 
+  console.log(err);
   if (isCelebrateError(err)) {
     return res
       .status(BAD_REQUEST_ERROR_CODE)
