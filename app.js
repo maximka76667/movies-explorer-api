@@ -19,7 +19,7 @@ const app = express();
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', err => {
   if(err) throw err;
-  console.log('Connected to MongoDB.')
+  console.log('Успешно подключен к MongoDB.')
 });
 
 app.use(express.json());
@@ -56,6 +56,7 @@ app.use((err, req, res, next) => {
   const { statusCode = DEFAULT_ERROR_CODE, message = errorMessages.defaultErrorMessage } = err;
 
   console.log(err);
+  
   if (isCelebrateError(err)) {
     return res
       .status(BAD_REQUEST_ERROR_CODE)
@@ -70,5 +71,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Server started.');
+  console.log('Сервер запущен.');
 });
