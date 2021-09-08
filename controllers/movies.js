@@ -35,16 +35,6 @@ const deleteMovie = (req, res, next) => {
         .catch((err) => next(handleErrors(err)));
     })
     .catch((err) => next(handleErrors(err)));
-  
-  // Movie.findByIdAndDelete(movieId)
-  //   .then((movie) => {
-  //     if (!movie) throw new NotFoundError(notFoundErrorMessage);
-  //     if (movie.owner._id.toString() !== req.user._id) {
-  //       throw new ForbiddenError(forbiddenErrorMessage);
-  //     }
-  //     return res.send({ movie });
-  //   })
-  //   .catch((err) => next(handleErrors(err)));
 };
 
 module.exports = {
