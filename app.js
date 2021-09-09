@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const path = require('path');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DB_URL } = process.env;
 
 // Validation
 const { isCelebrateError, celebrate, Joi } = require('celebrate');
@@ -45,7 +45,7 @@ const DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE';
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/moviesdb', (err) => {
+mongoose.connect(`${DB_URL}/moviesdb`, (err) => {
   if (err) throw err;
 });
 
