@@ -1,10 +1,7 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
 const path = require('path');
-
-const { PORT = 3000, DB_URL } = process.env;
 
 // Validation
 const { isCelebrateError, celebrate, Joi } = require('celebrate');
@@ -14,6 +11,9 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const limiter = require('./middlewares/rate-limiter');
+
+// Config
+const { PORT, DB_URL, ALLOWED_CORS, DEFAULT_ALLOWED_METHODS } = require('./config');
 
 // Controllers methods
 const { createUser, login } = require('./controllers/users');
@@ -29,19 +29,6 @@ const {
   BAD_REQUEST_ERROR_CODE,
   NOT_FOUND_ERROR_CODE,
 } = require('./errors/error-config');
-
-const allowedCors = [
-  'https://max76667.diploma.nomoredomains.monster',
-  'http://max76667.diploma.nomoredomains.monster',
-  'localhost:3000',
-  'http://localhost:3000',
-  'localhost:3001',
-  'http://localhost:3001',
-  'localhost:5000',
-  'http://localhost:5000',
-];
-
-const DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE';
 
 const app = express();
 
@@ -64,7 +51,7 @@ app.use(
       // allow requests with no origin
       // (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      if (allowedCors.includes(origin)) return callback(null, true);
+      if (ALLOWED_CORS.includes(origin)) return callback(null, true);
       return callback(new Error('Ошибка CORS'), true);
     },
     methods: DEFAULT_ALLOWED_METHODS,
