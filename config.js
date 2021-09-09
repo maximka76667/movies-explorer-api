@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const config = {};
 
 config.DB_URL = 'mongodb://localhost:27017';
@@ -15,7 +13,5 @@ config.ALLOWED_CORS = [
 ];
 config.DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE';
 config.PORT = process.env.PORT || 3000;
-config.NODE_ENV = process.env.NODE_ENV;
-config.JWT_SECRET = process.env.JWT_SECRET;
 
 module.exports = config;
