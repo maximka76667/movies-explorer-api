@@ -6,14 +6,14 @@ const path = require('path');
 
 const { PORT = 3000 } = process.env;
 
-// Security
-const cookieParser = require('cookie-parser');
-const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
-const cors = require('cors');
-
 // Validation
 const { isCelebrateError, celebrate, Joi } = require('celebrate');
+
+// Security
+const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const cors = require('cors');
+const limiter = require('./middlewares/rate-limiter');
 
 // Controllers methods
 const { createUser, login } = require('./controllers/users');
@@ -29,12 +29,6 @@ const {
   BAD_REQUEST_ERROR_CODE,
   NOT_FOUND_ERROR_CODE,
 } = require('./errors/error-config');
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests, please try again later.',
-});
 
 const allowedCors = [
   'https://max76667.diploma.nomoredomains.monster',
