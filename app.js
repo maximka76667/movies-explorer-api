@@ -64,35 +64,45 @@ app.use(limiter);
 
 app.use(requestLogger);
 
-app.use(cors({
-  origin: (origin, callback) => {
-    // allow requests with no origin
-    // (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedCors.includes(origin)) return callback(null, true);
-    return callback(new Error('Ошибка CORS'), true);
-  },
-  methods: DEFAULT_ALLOWED_METHODS,
-  allowedHeaders: 'Content-Type, Authorization',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // allow requests with no origin
+      // (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedCors.includes(origin)) return callback(null, true);
+      return callback(new Error('Ошибка CORS'), true);
+    },
+    methods: DEFAULT_ALLOWED_METHODS,
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
+  })
+);
 
 // User signup
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
+app.post(
+  '/signup',
+  celebrate({
+    body: Joi.object().keys({
+      name: Joi.string().min(2).max(30).required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    }),
   }),
-}), createUser);
+  createUser
+);
 
 // User signin
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
+app.post(
+  '/signin',
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    }),
   }),
-}), login);
+  login
+);
 
 // Auth
 app.use(auth);
@@ -133,9 +143,7 @@ app.use((err, req, res, next) => {
       .send({ message: errorMessages.validationErrorMessage });
   }
 
-  res
-    .status(statusCode)
-    .send({ message });
+  res.status(statusCode).send({ message });
 
   return next();
 });

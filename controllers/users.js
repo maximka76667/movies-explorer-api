@@ -18,23 +18,26 @@ const getMyUser = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
-  const {
-    name, email, password,
-  } = req.body;
+  const { name, email, password } = req.body;
 
-  bcrypt.hash(password, 10)
+  bcrypt
+    .hash(password, 10)
     .then((hash) => {
       User.init()
         .then(
           User.create({
-            name, email, password: hash,
+            name,
+            email,
+            password: hash,
           })
-            .then((user) => res.send({
-              _id: user._id,
-              name,
-              email,
-            }))
-            .catch((err) => next(handleErrors(err))),
+            .then((user) =>
+              res.send({
+                _id: user._id,
+                name,
+                email,
+              })
+            )
+            .catch((err) => next(handleErrors(err)))
         )
         .catch((err) => next(handleErrors(err)));
     })
@@ -61,7 +64,7 @@ const login = (req, res, next) => {
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'jwt-secret',
-        { expiresIn: '7d' },
+        { expiresIn: '7d' }
       );
 
       res
