@@ -2,8 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
-const path = require('path');
-
 // Validation
 const { isCelebrateError, celebrate, Joi } = require('celebrate');
 
@@ -28,8 +26,8 @@ const {
   errorMessages,
   DEFAULT_ERROR_CODE,
   BAD_REQUEST_ERROR_CODE,
-  NOT_FOUND_ERROR_CODE,
 } = require('./errors/error-config');
+const NotFoundError = require('./errors/not-found-error');
 
 const app = express();
 
@@ -90,27 +88,15 @@ app.post(
 app.use(auth);
 
 // Routes
-app.use('/users', require('./routes/users'));
-app.use('/movies', require('./routes/movies'));
+app.use(require('./routes/index'));
+
+app.get('/signout', (req, res) => {
+  res.clearCookie('jwt');
+});
 
 // If route not found
 app.use((req, res, next) => {
-  res.status(NOT_FOUND_ERROR_CODE);
-
-  // respond with html page
-  if (req.accepts('html')) {
-    return res.sendFile(path.join(__dirname, './utils/index.html'));
-  }
-
-  // respond with json
-  if (req.accepts('json')) {
-    return res.json({ message: 'Not found' });
-  }
-
-  // default to plain-text. send()
-  res.type('txt').send('Not found');
-
-  return next();
+  next(new NotFoundError(errorMessages.notFoundErrorMessages.routes));
 });
 
 app.use(errorLogger);

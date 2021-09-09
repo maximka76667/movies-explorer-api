@@ -14,7 +14,7 @@ const getMovies = (req, res, next) => {
 };
 
 const addMovie = (req, res, next) => {
-  Movie.create({ ...req.body, owner: req.user._id })
+  Movie.create({ owner: req.user._id, ...req.body })
     .then((movie) => res.send({ movie }))
     .catch((err) => next(handleErrors(err)));
 };
