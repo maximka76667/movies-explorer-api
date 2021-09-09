@@ -29,9 +29,7 @@ const deleteMovie = (req, res, next) => {
         throw new ForbiddenError(forbiddenErrorMessage);
       }
       Movie.findByIdAndDelete(movieId)
-        .then((movie) => {
-          return res.send({ movie });
-        })
+        .then(() => res.send({ movie }))
         .catch((err) => next(handleErrors(err)));
     })
     .catch((err) => next(handleErrors(err)));
