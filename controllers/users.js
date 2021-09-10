@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const { JWT_SECRET, NODE_ENV } = process.env;
+const config = require('../config');
 const NotFoundError = require('../errors/not-found-error');
 const ForbiddenError = require('../errors/forbidden-error');
 const { errorMessages } = require('../errors/error-config');
@@ -61,7 +62,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'jwt-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : config.JWT_SECRET_DEV,
         { expiresIn: '7d' },
       );
 

@@ -16,18 +16,13 @@ const { ALLOWED_CORS, DEFAULT_ALLOWED_METHODS } = require('./config');
 // Middlewares
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error-handler');
-
-// Errors
-const {
-  errorMessages,
-} = require('./errors/error-config');
-const NotFoundError = require('./errors/not-found-error');
+const routeNotFound = require('./middlewares/route-not-found');
 
 const app = express();
 
-mongoose.connect(DB_URL, (err) => {
-  if (err) throw err;
-});
+const connectDB = async () => {
+  await mongoose.connect(DB_URL);
+};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -56,12 +51,10 @@ app.use(
 
 app.use(require('./routes/index'));
 
-// If route not found
-app.use((req, res, next) => {
-  next(new NotFoundError(errorMessages.notFoundErrorMessages.routes));
-});
+app.use(routeNotFound);
 
 app.use(errorLogger);
 app.use(errorHandler);
 
 app.listen(PORT);
+connectDB();

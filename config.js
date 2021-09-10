@@ -11,5 +11,6 @@ config.ALLOWED_CORS = [
   'http://localhost:5000',
 ];
 config.DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE';
+config.JWT_SECRET_DEV = 'jwt-secret';
 
 module.exports = config;
