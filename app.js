@@ -52,7 +52,7 @@ app.use(
 
 app.use(require('./routes/index'));
 
-app.use(auth, routeNotFound);
+app.use(routeNotFound);
 
 app.use(errorLogger);
 app.use(errorHandler);
