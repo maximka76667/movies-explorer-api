@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
+const { errorMessages } = require('../errors/error-config');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -25,24 +27,24 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (link) => /^(https?:\/\/)(www.)?([\w-]{1,32}\.[\w-]{1,32})[^\s]*#?$/.test(link),
-      message: 'Ошибка валидации ссылки',
+      validator: (link) => validator.isURL(link),
+      message: errorMessages.validationErrorMessage.link,
     },
   },
   trailer: {
     type: String,
     required: true,
     validate: {
-      validator: (link) => /^(https?:\/\/)(www.)?([\w-]{1,32}\.[\w-]{1,32})[^\s]*#?$/.test(link),
-      message: 'Ошибка валидации ссылки',
+      validator: (link) => validator.isURL(link),
+      message: errorMessages.validationErrorMessage.link,
     },
   },
   thumbnail: {
     type: String,
     required: true,
     validate: {
-      validator: (link) => /^(https?:\/\/)(www.)?([\w-]{1,32}\.[\w-]{1,32})[^\s]*#?$/.test(link),
-      message: 'Ошибка валидации ссылки',
+      validator: (link) => validator.isURL(link),
+      message: errorMessages.validationErrorMessage.link,
     },
   },
   owner: {
@@ -50,7 +52,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: String,
+    type: Number,
     required: true,
   },
   nameRU: {

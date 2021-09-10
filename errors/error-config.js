@@ -6,17 +6,22 @@ const CONFLICT_ERROR_CODE = 409;
 const DEFAULT_ERROR_CODE = 500;
 
 const errorMessages = {
-  validationErrorMessage: 'Переданы некорректные данные',
-  unauthorizedErrorMessage: 'Ошибка авторизации',
-  forbiddenErrorMessage: 'Отказано в доступе',
+  validationErrorMessage: {
+    default: 'Переданы некорректные данные.',
+    link: 'Ошибка валидации ссылки.',
+    email: 'Ошибка валидации почтового адреса.',
+  },
+  unauthorizedErrorMessage: 'Необходима авторизация.',
+  incorrectCredentialsErrorMessage: 'Неправильная почта или пароль.',
+  forbiddenErrorMessage: 'Отказано в доступе.',
   notFoundErrorMessages: {
     movies: 'Карточка с указанным _id не найдена.',
     users: 'Пользователь по указанному _id не найден.',
-    routes: 'Запрашиваемый маршрут не найден',
+    routes: 'Запрашиваемый маршрут не найден.',
   },
-  castErrorMessage: 'Невалидный id',
-  conflictErrorMessage: 'Почтовый адрес уже используется',
-  defaultErrorMessage: 'На сервере произошла ошибка',
+  castErrorMessage: 'Невалидный id.',
+  conflictErrorMessage: 'Почтовый адрес уже используется.',
+  defaultErrorMessage: 'На сервере произошла ошибка.',
 };
 
 module.exports = {
