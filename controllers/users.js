@@ -81,6 +81,7 @@ const login = (req, res, next) => {
 
 const signout = (req, res) => {
   res.clearCookie('jwt');
+  res.send({ message: 'Куки успешно удалены.' });
 };
 
 module.exports = {
