@@ -17,6 +17,7 @@ const { ALLOWED_CORS, DEFAULT_ALLOWED_METHODS } = require('./config');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error-handler');
 const routeNotFound = require('./middlewares/route-not-found');
+const auth = require('./middlewares/auth');
 
 const app = express();
 
@@ -51,7 +52,7 @@ app.use(
 
 app.use(require('./routes/index'));
 
-app.use(routeNotFound);
+app.use(auth, routeNotFound);
 
 app.use(errorLogger);
 app.use(errorHandler);
