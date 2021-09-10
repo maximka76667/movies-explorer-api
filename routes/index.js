@@ -24,7 +24,7 @@ router.post(
       nameEN: Joi.string().required(),
     }),
   }),
-  addMovie
+  addMovie,
 );
 
 router.delete(
@@ -34,7 +34,7 @@ router.delete(
       movieId: Joi.string().required(),
     }),
   }),
-  deleteMovie
+  deleteMovie,
 );
 
 // Users routes
@@ -48,7 +48,7 @@ router.patch(
       email: Joi.string().email().required(),
     }),
   }),
-  updateUser
+  updateUser,
 );
 
 router.get('/signout', signout);

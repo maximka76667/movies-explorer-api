@@ -30,14 +30,12 @@ const createUser = (req, res, next) => {
             email,
             password: hash,
           })
-            .then((user) =>
-              res.send({
-                _id: user._id,
-                name,
-                email,
-              })
-            )
-            .catch((err) => next(handleErrors(err)))
+            .then((user) => res.send({
+              _id: user._id,
+              name,
+              email,
+            }))
+            .catch((err) => next(handleErrors(err))),
         )
         .catch((err) => next(handleErrors(err)));
     })
@@ -64,7 +62,7 @@ const login = (req, res, next) => {
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'jwt-secret',
-        { expiresIn: '7d' }
+        { expiresIn: '7d' },
       );
 
       res

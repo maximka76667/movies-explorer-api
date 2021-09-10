@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
+const { PORT = 3000, DB_URL } = process.env;
+
 // Validation
 const { isCelebrateError, celebrate, Joi } = require('celebrate');
 
@@ -12,7 +14,7 @@ const cors = require('cors');
 const limiter = require('./middlewares/rate-limiter');
 
 // Config
-const { PORT, DB_URL, ALLOWED_CORS, DEFAULT_ALLOWED_METHODS } = require('./config');
+const { ALLOWED_CORS, DEFAULT_ALLOWED_METHODS } = require('./config');
 
 // Controllers methods
 const { createUser, login } = require('./controllers/users');
@@ -31,7 +33,7 @@ const NotFoundError = require('./errors/not-found-error');
 
 const app = express();
 
-mongoose.connect(`${DB_URL}/moviesdb`, (err) => {
+mongoose.connect(DB_URL, (err) => {
   if (err) throw err;
 });
 
@@ -56,7 +58,7 @@ app.use(
     methods: DEFAULT_ALLOWED_METHODS,
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
-  })
+  }),
 );
 
 // User signup
@@ -69,7 +71,7 @@ app.post(
       password: Joi.string().required(),
     }),
   }),
-  createUser
+  createUser,
 );
 
 // User signin
@@ -81,7 +83,7 @@ app.post(
       password: Joi.string().required(),
     }),
   }),
-  login
+  login,
 );
 
 // Auth
@@ -99,7 +101,10 @@ app.use(errorLogger);
 
 // Error Handler
 app.use((err, req, res, next) => {
-  const { statusCode = DEFAULT_ERROR_CODE, message = errorMessages.defaultErrorMessage } = err;
+  const {
+    statusCode = DEFAULT_ERROR_CODE,
+    message = errorMessages.defaultErrorMessage,
+  } = err;
 
   if (isCelebrateError(err)) {
     return res
