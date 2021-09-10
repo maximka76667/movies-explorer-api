@@ -90,10 +90,6 @@ app.use(auth);
 // Routes
 app.use(require('./routes/index'));
 
-app.get('/signout', (req, res) => {
-  res.clearCookie('jwt');
-});
-
 // If route not found
 app.use((req, res, next) => {
   next(new NotFoundError(errorMessages.notFoundErrorMessages.routes));

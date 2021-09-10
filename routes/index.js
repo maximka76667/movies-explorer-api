@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const { getMovies, addMovie, deleteMovie } = require('../controllers/movies');
-const { getMyUser, updateUser } = require('../controllers/users');
+const { getMyUser, updateUser, signout } = require('../controllers/users');
 const { validateLink } = require('../utils/validateLink');
 
 // Movies routes
@@ -50,5 +50,7 @@ router.patch(
   }),
   updateUser
 );
+
+router.get('/signout', signout);
 
 module.exports = router;

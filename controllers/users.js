@@ -73,10 +73,14 @@ const login = (req, res, next) => {
           httpOnly: true,
           sameSite: true,
         })
-        .send({ message: 'Авторизация прошла успешно' })
+        .send({ message: 'Авторизация прошла успешно', token })
         .end();
     })
     .catch((err) => next(handleErrors(err)));
+};
+
+const signout = (req, res) => {
+  res.clearCookie('jwt');
 };
 
 module.exports = {
@@ -84,4 +88,5 @@ module.exports = {
   createUser,
   updateUser,
   login,
+  signout,
 };
