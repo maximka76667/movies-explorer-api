@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
-const { PORT = 3000, DB_URL } = process.env;
+const { PORT = 3000 } = process.env;
 
 // Security
 const cookieParser = require('cookie-parser');
@@ -11,7 +11,7 @@ const cors = require('cors');
 const limiter = require('./middlewares/rate-limiter');
 
 // Config
-const { ALLOWED_CORS, DEFAULT_ALLOWED_METHODS } = require('./config');
+const { ALLOWED_CORS, DEFAULT_ALLOWED_METHODS, DB_URL } = require('./config');
 
 // Middlewares
 const { requestLogger, errorLogger } = require('./middlewares/logger');

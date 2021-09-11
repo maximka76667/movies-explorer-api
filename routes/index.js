@@ -7,6 +7,8 @@ const {
 } = require('../controllers/users');
 const { validateLink } = require('../utils/validateLink');
 
+router.use('/', auth);
+
 router.post(
   '/signup',
   celebrate({
