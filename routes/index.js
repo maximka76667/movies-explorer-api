@@ -6,8 +6,7 @@ const {
   createUser, login, getMyUser, updateUser, signout,
 } = require('../controllers/users');
 const { validateLink } = require('../utils/validateLink');
-
-router.use('/', auth);
+const routeNotFound = require('../middlewares/route-not-found');
 
 router.post(
   '/signup',
@@ -32,12 +31,13 @@ router.post(
   login,
 );
 
+router.use(auth);
+
 // Movies routes
-router.get('/movies', auth, getMovies);
+router.get('/movies', getMovies);
 
 router.post(
   '/movies',
-  auth,
   celebrate({
     body: Joi.object().keys({
       country: Joi.string().required(),
@@ -58,7 +58,6 @@ router.post(
 
 router.delete(
   '/movies/:movieId',
-  auth,
   celebrate({
     params: Joi.object().keys({
       movieId: Joi.string().hex().length(24),
@@ -72,7 +71,6 @@ router.get('/users/me', auth, getMyUser);
 
 router.patch(
   '/users/me',
-  auth,
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().min(2).max(30).required(),
@@ -82,6 +80,8 @@ router.patch(
   updateUser,
 );
 
-router.get('/signout', auth, signout);
+router.get('/signout', signout);
+
+router.use(routeNotFound);
 
 module.exports = router;

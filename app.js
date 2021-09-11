@@ -16,7 +16,6 @@ const { ALLOWED_CORS, DEFAULT_ALLOWED_METHODS, DB_URL } = require('./config');
 // Middlewares
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error-handler');
-const routeNotFound = require('./middlewares/route-not-found');
 
 const app = express();
 
@@ -50,8 +49,6 @@ app.use(
 );
 
 app.use(require('./routes/index'));
-
-app.use(routeNotFound);
 
 app.use(errorLogger);
 app.use(errorHandler);
