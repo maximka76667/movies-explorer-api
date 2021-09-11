@@ -67,7 +67,7 @@ router.delete(
 );
 
 // Users routes
-router.get('/users/me', auth, getMyUser);
+router.get('/users/me', getMyUser);
 
 router.patch(
   '/users/me',
