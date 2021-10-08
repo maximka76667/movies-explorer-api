@@ -1,3 +1,3 @@
-# Movies-explorer-api
-Domain: https://api.max76667.movies.nomoredomains.club/  
-IP: 178.154.194.243  
+# Movies-Explorer-API
+## API of my Movies Explorer  
+Domain: https://api.max76667.movies.nomoredomains.club
