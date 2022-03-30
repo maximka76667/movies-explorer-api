@@ -20,7 +20,7 @@ const errorHandler = require('./middlewares/error-handler');
 const app = express();
 
 const connectDB = async () => {
-  await mongoose.connect(DB_URL);
+  await mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 };
 
 app.use(requestLogger);
