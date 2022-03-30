@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { NODE_ENV, DB_URL, PASSWORD } = process.env;
 const config = {};
 
