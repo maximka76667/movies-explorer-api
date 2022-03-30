@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { NODE_ENV, DB_URL, PASSWORD } = process.env;
+const { PASSWORD } = process.env;
 const config = {};
 
 config.ALLOWED_CORS = [
