@@ -16,6 +16,6 @@ config.ALLOWED_CORS = [
 ];
 config.DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS';
 config.JWT_SECRET_DEV = 'jwt-secret';
-config.DB_URL = NODE_ENV === 'production' ? DB_URL : `mongodb+srv://maximgriven:${PASSWORD}@cluster0.kqkml.mongodb.net/explorerdb?retryWrites=true&w=majority`;
+config.DB_URL = `mongodb+srv://maximgriven:${PASSWORD}@cluster0.kqkml.mongodb.net/explorerdb?retryWrites=true&w=majority`;
 
 module.exports = config;
