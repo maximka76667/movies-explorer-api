@@ -13,6 +13,8 @@ config.ALLOWED_CORS = [
   'http://localhost:3001',
   'localhost:5000',
   'http://localhost:5000',
+  'https://maximka76667.github.io',
+  'maximka76667.github.io',
 ];
 config.DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS';
 config.JWT_SECRET_DEV = 'jwt-secret';
