@@ -1,4 +1,4 @@
-const { NODE_ENV, DB_URL } = process.env;
+const { NODE_ENV, DB_URL, PASSWORD } = process.env;
 const config = {};
 
 config.ALLOWED_CORS = [
@@ -14,6 +14,6 @@ config.ALLOWED_CORS = [
 ];
 config.DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS';
 config.JWT_SECRET_DEV = 'jwt-secret';
-config.DB_URL = NODE_ENV === 'production' ? DB_URL : 'mongodb://localhost:27017/moviesdb';
+config.DB_URL = NODE_ENV === 'production' ? DB_URL : `mongodb+srv://maximgriven:${PASSWORD}@cluster0.kqkml.mongodb.net/explorerdb?retryWrites=true&w=majority`;
 
 module.exports = config;
