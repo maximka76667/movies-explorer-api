@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/maximka76667/movies-explorer-api#readme",
   "devDependencies": {
+    "@architect/sandbox": "^5.3.4",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.24.2",
