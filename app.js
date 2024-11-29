@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
-const { PORT = 3000 } = process.env;
+const { PORT = 8080 } = process.env;
 
 // Security
 const cookieParser = require("cookie-parser");
@@ -38,13 +38,14 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // allow requests with no origin
-      // (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      if (ALLOWED_CORS.includes(origin)) return callback(null, true);
-      return callback(new Error("Ошибка CORS"), true);
-    },
+    origin: (origin, callback) => callback(null, true),
+    // (origin, callback) => {
+    //   // allow requests with no origin
+    //   // (like mobile apps or curl requests)
+    //   if (!origin) return callback(null, true);
+    //   if (ALLOWED_CORS.includes(origin)) return callback(null, true);
+    //   return callback(new Error("Ошибка CORS"), true);
+    // },
     methods: DEFAULT_ALLOWED_METHODS,
     allowedHeaders: "Content-Type, Authorization",
     credentials: true,
